@@ -1,13 +1,36 @@
 .card{
     width: 45px;
     height: 45px;
-    background: $menu-color;
     border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 2rem;
     cursor: pointer;
+    position: relative;
+    transition: transform 500ms;
+    transform-style: preserve-3d;
+
+    // ANIMACJA ODWRACANIA KARTY
+    &--flip{
+        transform: rotateY(180deg);
+    }
+    &__face{
+        border-radius: 5px;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &-front{
+            background: $card-color;
+        }
+        &-back{
+            background: $menu-color;
+            transform: rotateY(180deg);
+        }
+    }
+
 }
 
 @media (min-width: $small-device){
