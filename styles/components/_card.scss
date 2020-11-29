@@ -1,0 +1,31 @@
+.card{
+    width: 45px;
+    height: 45px;
+    background: $menu-color;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+@media (min-width: $small-device){
+    .card{
+        width: 60px;
+        height: 60px;
+    }
+}
+@media (min-width: $medium-device){
+    .card{
+        height: 75px;
+        width: 75px;
+    }
+}
+
+@media (min-width: $large-device){
+    .card{
+        width: 90px;
+        height: 90px;
+    }
+}

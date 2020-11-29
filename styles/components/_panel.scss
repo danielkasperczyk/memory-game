@@ -1,0 +1,42 @@
+.panel{
+    position: absolute;
+    bottom: 20px;
+    align-self: center;
+    width: 70%;
+    max-width: 290px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: $menu-color;
+    display: flex;
+    justify-content: space-between;
+    &__points {
+        display: flex;
+        &-box{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-left:1rem; 
+        }   
+        &-exit{
+            width: 50px;
+            border: none;
+            outline: 0;
+            background-color: $card-color;
+            cursor: pointer;
+        }
+    }
+}
+@media (min-width: $small-device){
+    .panel{
+        max-width: 340px;
+        &__points{
+            &-box:last-child{
+                margin-left: 2rem;
+            }
+            &-exit{
+                width: 65px;
+            }
+        }
+    }
+}

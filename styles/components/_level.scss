@@ -1,0 +1,43 @@
+.level{
+    cursor: pointer;
+    border: none;
+    outline: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 280px;
+    height: 42px;
+    background-color: $card-color;
+    margin: 0.75rem 0;
+    border-radius: 5px;
+    align-items: center;
+    &__name{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.25rem 0.5rem;
+        margin-left: 0.5rem;
+    }
+    &__amount{
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 1.5rem;
+    }
+}
+
+@media (min-width: 576px){
+    .level{
+        max-width: 320px;
+        height: 50px;
+    }
+}
+@media (min-width: 768px){
+    .level{
+        max-width: 360px;
+        height: 65px;
+    }
+}
+
+.hideRecord{ display: none}
