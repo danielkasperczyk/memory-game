@@ -1,0 +1,1 @@
+export const levels = Array.from(document.querySelectorAll('.level'));
