@@ -1,9 +1,11 @@
-import { game, gameBoard } from './queries.js';
+import {  gameBoard, points, moves } from './queries.js';
 import { icons } from './icons.js';
+import { handleCardClick } from './handlers.js';
 //jeżeli w LocalStorage będzie napisane w ile ruchów użytkwnik wygrał, należy to wyświetlić
 //a jeśli nie ma to nie należy wyświetlać
 
 //po kliknięciu na przycisk pobrać ilość kart do wyświetlenia na planszy
+const wait = (amount = 0) => new Promise(resolve => setTimeout(resolve, amount));
 
 const test = {
     8: 23,
@@ -57,20 +59,69 @@ export function displaySection(hideSection, showSection){
 
 export function createBoard(amountOfCards, icons) {
     gameBoard.innerHTML = '';
+    points.textContent = '0';
+    moves.textContent = '0';
     for(let i = 0; i < amountOfCards; i++){
         gameBoard.insertAdjacentElement('afterbegin', createCard(icons[i]))
     }
+    Array.from(document.querySelectorAll('.card'))
+            .forEach(card => card.addEventListener('click', handleCardClick));
+
+        
 }
 
 function createCard( {animal, icon} ){
     const button = document.createElement("button");
-    button.setAttribute("animal", `${animal}`)
+    button.setAttribute("data-animal", `${animal}`)
     button.classList.add('card');
     const markup = `<div class="card__face card__face-front"></div>
     <div class="card__face card__face-back">
         ${icon}
     </div>`
     button.insertAdjacentHTML("afterbegin",markup)
-    console.log(button)
     return button;
+}
+
+export async function checkCards(){
+    let animal1, animal2;
+    const allCards = Array.from(document.querySelectorAll('.card'));
+    const cards = Array.from(document.querySelectorAll('.card--flip'));
+    const cardsArray = cards.map(card => card.closest('.card'));
+    if(cardsArray.length === 2) {
+        animal1 = cardsArray[0].dataset.animal;
+        animal2 = cardsArray[1].dataset.animal;
+        if(animal1 === animal2){
+            console.log(animal1 === animal2)
+            cardsArray.forEach(card => {
+                card.classList.remove('card--flip')
+                card.classList.add('card--stay');
+                
+            })
+            countScore(true)    
+        }
+        else{
+            countScore(false)
+            allCards.forEach(card =>card.disabled=true)
+            await wait(1000);
+            allCards.forEach(card =>card.disabled=false)
+            cardsArray.forEach(card => {
+                card.classList.remove('card--flip');
+            })
+            
+        }
+    }
+}
+
+function countScore(same){
+    let numPoints = parseInt(points.textContent);
+    let numMoves = parseInt(moves.textContent);
+
+    if(same === true){
+        points.textContent = (numPoints += 1).toString();
+        moves.textContent = (numMoves += 1).toString()
+    }
+    else {
+        console.log(numMoves)
+        moves.textContent = (numMoves +=1).toString()
+    }
 }

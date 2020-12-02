@@ -1,5 +1,5 @@
-import { getIcons, displaySection, createBoard } from './unit.js'
-import { menu, game } from './queries.js';
+import { getIcons, displaySection, createBoard, checkCards } from './unit.js'
+import { menu, game, exitButton } from './queries.js';
 //wybiera poziom bazując na data set
 // tworzy plansze zgodnie z wybranym poziomem
 export function pickLevel(e){
@@ -10,11 +10,16 @@ export function pickLevel(e){
 }
 
 //GRA
-//nadać karcie klase z animacja odwracania
-//maksymalnie mogą być tylko dwie karty odwrócone
-//jeżeli uzytkonik znajdzie dwie takie same karty zostaną one na stałe odwrócone ikono do przodu
-//za każde znalezienie dwóch tych samych kart użytkownik dostanie punkt
-//za kazdę odwrócenie kart użytkownikowi dodaje się 1 ruch
+export function handleCardClick(e){
+    const card = e.currentTarget;
+    card.classList.add('card--flip');
+    checkCards();
+}
+
+exitButton.addEventListener('click', function(){
+    game.style.display = 'none';
+    menu.style.display = 'flex';
+})
 //użytkownik ma możliwość opuszczenia gry
 
 //MODAL
