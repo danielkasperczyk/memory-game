@@ -1,20 +1,13 @@
-import {  gameBoard, points, moves } from './queries.js';
+import {  gameBoard, points, moves, modal, modalInner } from './queries.js';
 import { icons } from './icons.js';
 import { handleCardClick } from './handlers.js';
 //jeżeli w LocalStorage będzie napisane w ile ruchów użytkwnik wygrał, należy to wyświetlić
 //a jeśli nie ma to nie należy wyświetlać
 
 //po kliknięciu na przycisk pobrać ilość kart do wyświetlenia na planszy
-const wait = (amount = 0) => new Promise(resolve => setTimeout(resolve, amount));
+export const wait = (amount = 0) => new Promise(resolve => setTimeout(resolve, amount));
 
-const test = {
-    8: 23,
-    12: 0,
-    16:18,
-    20: 0,
-    24: 25
-}
-localStorage.setItem('test', JSON.stringify(test) );
+
 
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
@@ -39,19 +32,18 @@ export function getIcons(number){
     return shuffle(arrayOfIcons);
 }
 
-// Read and show records saved in localStorage
-//DONE
+
 export function showRecords(){
-    const locStorage = Object.entries(JSON.parse(localStorage.getItem('test')));
-    locStorage.filter(item => item[1] > 0)
+    if(localStorage.getItem('records')){
+        Object.entries(JSON.parse(localStorage.getItem('records'))).filter(item => item[1] > 0)
         .forEach(record => {
             const levelBox = document.querySelector(`[data-level='${record[0]}']`);
             levelBox.querySelector('p').classList.remove('hideRecord');
             levelBox.querySelector('.amount').textContent = `${record[1]}`
     })
+    }
 }
 
-//After clicking on one of few levels show section with cards and hide with levels to pick
 export function displaySection(hideSection, showSection){
     hideSection.style.display = 'none';
     showSection.style.display = 'flex';
@@ -124,4 +116,28 @@ function countScore(same){
         console.log(numMoves)
         moves.textContent = (numMoves +=1).toString()
     }
+}
+
+export async function endGame(){
+    const cards = Array.from(document.querySelectorAll('.card')).length;
+    if((cards / 2) ===parseInt(points.textContent)){
+        saveInLocal(parseInt(cards), parseInt(moves.textContent));
+        modal.style.display = 'flex';
+        await wait (10);
+        modalInner.classList.add('show');
+    }
+}
+
+
+export function saveInLocal(level, moves){
+    const records = JSON.parse(localStorage.getItem('records'));
+    if(records){
+        records[level] > moves ? records[level] = moves : null;   
+        localStorage.removeItem('records');
+        localStorage.setItem("records", JSON.stringify(records));     
+    }
+    else {
+        localStorage.setItem("records", JSON.stringify({[level]: moves})) 
+    }
+    showRecords();
 }
