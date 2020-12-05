@@ -5,16 +5,29 @@
     font-size: 2rem;
     cursor: pointer;
     position: relative;
-    transition: transform 500ms;
+    transition: all 500ms;
     transform-style: preserve-3d;
-
+    border:none;
+    background: transparent;
+    outline: 0;
+    opacity: 0.5;
+    transform: scale(0.5);
+    &--normal{
+        transform: scale(1);
+        opacity: 1;
+    }
     // ANIMACJA ODWRACANIA KARTY
     &--flip{
         transform: rotateY(180deg);
     }
+    &--stay {
+        transform: rotateY(180deg) scale(0.8);
+    }
     &__face{
         border-radius: 5px;
         position: absolute;
+        top: 0;
+        left: 0;
         height: 100%;
         width: 100%;
         backface-visibility: hidden;
