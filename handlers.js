@@ -24,10 +24,5 @@ modalExit.addEventListener('click', async e => {
     modal.style.display = 'none';
     displaySection(game, menu);
 })
-//użytkownik ma możliwość opuszczenia gry
-
-//MODAL
-//gra zakończy się jeżeli wszystkie karty zostaną odwrócone
-//DONE
 //jeżeli użytkownik zakończy gre wyświetli się modal z ilością wykonanych ruchów
 //MODAL SIĘ WYŚWIETLA, NALEŻY WYŚWIETLIĆ ILOŚĆ RUCHÓW I DOTYCHCZASOWY REKORD
